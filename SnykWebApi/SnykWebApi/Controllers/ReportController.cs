@@ -16,6 +16,8 @@ namespace SnykWebApi.Controllers
 
             string dirName = Path.Combine(path, "Reports");
 
+            var files = Directory.GetFiles(dirName);
+
             return Ok();
         }
 
