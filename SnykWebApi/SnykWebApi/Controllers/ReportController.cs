@@ -23,29 +23,29 @@ namespace SnykWebApi.Controllers
             return Ok(files);
         }
 
-        [HttpGet("sqlInjection")]
-        public bool LoginIsValid_INSECURE_EXAMPLE(string account, string password)
-        {
-            using (SqlConnection connection = new SqlConnection("connection_string"))
-            {
-                using (SqlCommand command = connection.CreateCommand())
-                {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT COUNT(*) FROM [User] WHERE [Account] = '" + account + "' AND [Password] = '" + password + "'";
+        //[HttpGet("sqlInjection")]
+        //public bool LoginIsValid_INSECURE_EXAMPLE(string account, string password)
+        //{
+        //    using (SqlConnection connection = new SqlConnection("connection_string"))
+        //    {
+        //        using (SqlCommand command = connection.CreateCommand())
+        //        {
+        //            command.CommandType = CommandType.Text;
+        //            command.CommandText = "SELECT COUNT(*) FROM [User] WHERE [Account] = '" + account + "' AND [Password] = '" + password + "'";
 
-                    connection.Open();
+        //            connection.Open();
 
-                    int count = (int)command.ExecuteScalar();
+        //            int count = (int)command.ExecuteScalar();
 
-                    if (count > 0)
-                    {
-                        return true;
-                    }
-                }
-            }
+        //            if (count > 0)
+        //            {
+        //                return true;
+        //            }
+        //        }
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
 
         [HttpGet("sqlInjectionSolved")]
