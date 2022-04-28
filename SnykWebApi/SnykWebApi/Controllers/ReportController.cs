@@ -46,5 +46,33 @@ namespace SnykWebApi.Controllers
 
             return false;
         }
+
+
+        [HttpGet("sqlInjectionSolved")]
+        public bool LoginIsValid_SECURE_EXAMPLE(string account, string password)
+        {
+            using (SqlConnection connection = new SqlConnection("connection_string"))
+            {
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT COUNT(*) FROM [User] WHERE [Account] = @Account AND [Password] = @Password";
+
+                    command.Parameters.Add(new SqlParameter("@Account", account));
+                    command.Parameters.Add(new SqlParameter("@Password", password));
+
+                    connection.Open();
+
+                    int count = (int)command.ExecuteScalar();
+
+                    if (count > 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }
