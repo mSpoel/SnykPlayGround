@@ -74,5 +74,32 @@ namespace SnykWebApi.Controllers
 
             return false;
         }
+
+        [HttpGet("passwordleak")]
+        public bool Password(string account, string password)
+        {
+            using (var connection = new SqlConnection("Server=myServerAddress;Database=myDataBase;User Id=username;Password=45jclkdjr323;"))
+            {
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT COUNT(*) FROM [User] WHERE [Account] = @Account AND [Password] = @Password";
+
+                    command.Parameters.Add(new SqlParameter("@Account", account));
+                    command.Parameters.Add(new SqlParameter("@Password", password));
+
+                    connection.Open();
+
+                    int count = (int)command.ExecuteScalar();
+
+                    if (count > 0)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
     }
 }
