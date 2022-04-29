@@ -99,6 +99,7 @@ namespace SnykWebApi.Controllers
                 }
 
                 return false;
+
             }
         }
     }
